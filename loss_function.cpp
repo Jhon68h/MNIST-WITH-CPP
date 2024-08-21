@@ -17,14 +17,20 @@ vector<int> Loss::prediction(vector<vector<float>> x){
     return predicted_numbers_list;
 }
 
-vector<int> distributionVector(vector<int> labels){
+vector<vector<int>> distributionVector(vector<int> labels){
     int cols = 10;
+    int value = 1;
     auto rows = labels.size();
-    vector<int> cerosVector(cols, 0);
-    vector<vector<int>> positionVector(rows, cerosVector);
-
+    vector<vector<int>> positionVector(rows, vector<int>(cols, 0));
     
+    for (int i = 0; i < rows; i++) {
+        int label = labels[i];
+        if (label >= 0 && label < cols) { // Verifica que el label esté dentro de los límites
+            positionVector[i][label] = 1; // Coloca un 1 en la posición 'label' de la fila 'i'
+        }
+    }
 
+    return positionVector;
 }
 
 //{5}{0, 0, 0, 0, 0, 1, 0, 0, 0, 0}
