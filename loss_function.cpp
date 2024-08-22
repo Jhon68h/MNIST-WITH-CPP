@@ -1,8 +1,19 @@
 #include "include/loss_functions.hpp"
 #include <cmath>
 #include <iterator>
+#include <vector>
 #define epsilon 1e-10f
 
+Loss::Loss(vector<int> labels, const vector<vector<float>>& probabilities){
+
+    vector<int> predictionVector = Loss::prediction(probabilities);
+    
+    vector<vector<int>> distributionVectorVariable = Loss::distributionVector(labels);
+
+    auto crossEntropy = Loss::cross_entropy(distributionVectorVariable, probabilities);
+}
+
+/*
 //This function visualize the largest probability and takes that position as the prediction
 vector<int> Loss::prediction(vector<vector<float>> x){
 
@@ -16,8 +27,9 @@ vector<int> Loss::prediction(vector<vector<float>> x){
     }
     return predicted_numbers_list;
 }
+*/
 
-vector<vector<int>> distributionVector(vector<int> labels){
+vector<vector<int>> Loss::distributionVector(vector<int> labels){
     //La función tiene que leer el label y en un vector de 0 de 10 posiciones
     //pondrá un 1 en la posicion que el label marque
 
