@@ -46,7 +46,7 @@ vector<vector<int>> distributionVector(vector<int> labels){
 // q(i) probabilidad predicha por el modelo
 
 
-auto cross_entropy(const vector<vector<int>>& distributionVector, const vector<vector<float>>& predictions){
+float Loss::cross_entropy(const vector<vector<int>>& distributionVector, const vector<vector<float>>& predictions){
     auto distributionVectorSize = distributionVector.size();
 
     float sum = 0.0f;
