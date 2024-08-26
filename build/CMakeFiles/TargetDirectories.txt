@@ -1,3 +1,3 @@
-/home/jhonatan/Documentos/C++/MNIST_WITH_CPP/build/CMakeFiles/MNIST.dir
-/home/jhonatan/Documentos/C++/MNIST_WITH_CPP/build/CMakeFiles/edit_cache.dir
-/home/jhonatan/Documentos/C++/MNIST_WITH_CPP/build/CMakeFiles/rebuild_cache.dir
+/home/jhonatan/Documents/C++/MNIST-WITH-CPP/build/CMakeFiles/MNIST.dir
+/home/jhonatan/Documents/C++/MNIST-WITH-CPP/build/CMakeFiles/edit_cache.dir
+/home/jhonatan/Documents/C++/MNIST-WITH-CPP/build/CMakeFiles/rebuild_cache.dir

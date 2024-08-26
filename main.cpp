@@ -10,8 +10,8 @@
 int main(){
   
   //LECTURA DE DATOS
-  string testData = "/home/jhonatan/Documentos/C++/MNIST_TRY/dataset/mnist_test_normalized.csv";
-  string trainData = "/home/jhonatan/Documentos/C++/MNIST_TRY/dataset/mnist_train_normalized.csv";
+  string testData = "/home/jhonatan/Documents/C++/MNIST_TRY/dataset/mnist_test_normalized.csv";
+  string trainData = "/home/jhonatan/Documents/C++/MNIST_TRY/dataset/mnist_train_normalized.csv";
   
   ReadData rd(trainData);
 
