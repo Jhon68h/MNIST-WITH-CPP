@@ -1,14 +1,19 @@
-#ifndef BACKPROPAGATION_HPP
-#define BACKPROPAGATION_HPP
+#pragma once
 
 #include "../activation_functions.cpp"
+#include <vector>
 
-class Backpropagation{
+class BP{
 
     public:
-        
+        BP();
+        //Descenso del gradiente
+        void gradient(float learningRate, const vector<vector<float>>& weights);
+
     private:
 
-};
+        float learningRate;
+        const vector<vector<float>>& weights;
 
-#endif
+};     
+

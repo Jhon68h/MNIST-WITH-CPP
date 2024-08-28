@@ -51,14 +51,10 @@ vector<vector<int>> Loss::distributionVector(vector<int> labels){
 }
 
 
-// cross entropy
-// H(p, q) = -SUM i->M p(i)log(q(i))
-// M = num of classes
-// p(i) probabilidad verdadera del evento i
-// q(i) probabilidad predicha por el modelo
-
-
 float Loss::cross_entropy(const vector<vector<int>>& distributionVector, const vector<vector<float>>& predictions){
+    //Se ingresa el distributionVector, este vector fue implementado en la anterior
+    //función, que como se explicó, es un vector que determina la posición
+    //real del label
     auto distributionVectorSize = distributionVector.size();
 
     float sum = 0.0f;
@@ -66,6 +62,11 @@ float Loss::cross_entropy(const vector<vector<int>>& distributionVector, const v
     #pragma omp parallel for reduction(-:sum) // Paralelización del bucle
     for(int i = 0; i < distributionVectorSize; i++) {
         for(int j = 0; j < 10; j++) {
+            // cross entropy
+            // H(p, q) = -SUM i->M p(i)log(q(i))
+            // M = num of classes
+            // p(i) probabilidad verdadera del evento i
+            // q(i) probabilidad predicha por el modelo
             sum -= distributionVector[i][j] * log(predictions[i][j] + epsilon);
         }
     }

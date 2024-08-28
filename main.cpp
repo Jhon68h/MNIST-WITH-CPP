@@ -5,6 +5,7 @@
 #include "loss_function.cpp"
 #include <iomanip>
 #include "shuffle.cpp"
+#include "printData.cpp"
 
 
 int main(){
@@ -20,6 +21,7 @@ int main(){
   vector<int> labels = rd.getLabels();
 ////////////////////////////////////////////////////////////////////////
   //CAPA OCULTA
+////////////////////////////////////////////////////////////////////////
   int hidden_layer_size = 16;
 
   Neuron neuron(hidden_layer_size, data_from_readcsv);
@@ -33,25 +35,16 @@ int main(){
 
   //////////////////////////////////////////////////////////////////
   //CAPA DE SALIDA
+  //////////////////////////////////////////////////////////////////
   int output_layer_size = 10;
 
   Neuron neuron2(output_layer_size, operation);
 
   vector<vector<float>> output_layer = neuron2.getMultiply_perceptron();
   softmax(output_layer);
-
-  cout << "\n filas de output: " << output_layer.size() << endl;
-  cout << "\n columnas de output: " << output_layer[0].size() << endl;
-
-  int rowsToPrint = std::min(10, static_cast<int>(output_layer.size()));
-  int colsToPrint = std::min(10, static_cast<int>(output_layer[0].size()));
-
-  for(int i = 0; i < rowsToPrint; i++){
-    for(int j = 0; j < colsToPrint; j++){
-      cout << fixed << setprecision(5) << setw(10) << output_layer[i][j] << "\t";
-    }
-    cout << endl;
-  }
+  
+  //Imprimir las 10 primeras filas de resultados
+  printFuntion(output_layer);
 
   if (checkProbabilities(output_layer)) {
       cout << "\nLas sumas de probabilidades da 1." << endl;
