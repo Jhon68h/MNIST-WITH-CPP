@@ -16,7 +16,7 @@ void BP::gradient(float learningRate, const vector<vector<float>>& weights){
 }
 
 vector<float> derivateRelu(vector<float> input) {
-    auto sizeInput = input.size(); 
+    auto sizeInput = input.sizex); 
     vector<float> derivate;
     
     for (size_t i = 0; i < sizeInput; i++) {
