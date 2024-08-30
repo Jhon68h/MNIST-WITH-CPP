@@ -13,9 +13,9 @@ class Loss{
 
     public:
 
-        Loss(vector<int> labels, const vector<vector<float>>& probabilities);
+        Loss(vector<int> labels, const vector<vector<float>>& probabilities, vector<int> predictions);
         
-        vector<int> prediction(vector<vector<float>> x);
+        //vector<int> prediction(vector<vector<float>> x);
         vector<vector<int>> distributionVector(vector<int> labels);
         float cross_entropy(const vector<vector<int>>& distributionVector, const vector<vector<float>>& predictions);
 

@@ -679,4 +679,5 @@ CMakeFiles/MNIST.dir/main.cpp.o
  /usr/include/c++/12/iterator
  /usr/include/c++/12/bits/stream_iterator.h
  /home/jhonatan/Documents/C++/MNIST-WITH-CPP/shuffle.cpp
+ /home/jhonatan/Documents/C++/MNIST-WITH-CPP/printData.cpp
 

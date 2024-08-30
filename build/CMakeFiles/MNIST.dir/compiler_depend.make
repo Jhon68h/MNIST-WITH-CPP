@@ -676,7 +676,8 @@ CMakeFiles/MNIST.dir/main.cpp.o: /home/jhonatan/Documents/C++/MNIST-WITH-CPP/mai
   /home/jhonatan/Documents/C++/MNIST-WITH-CPP/include/loss_functions.hpp \
   /usr/include/c++/12/iterator \
   /usr/include/c++/12/bits/stream_iterator.h \
-  /home/jhonatan/Documents/C++/MNIST-WITH-CPP/shuffle.cpp
+  /home/jhonatan/Documents/C++/MNIST-WITH-CPP/shuffle.cpp \
+  /home/jhonatan/Documents/C++/MNIST-WITH-CPP/printData.cpp
 
 
 /home/jhonatan/Documents/C++/MNIST-WITH-CPP/activation_functions.cpp:
@@ -868,6 +869,8 @@ CMakeFiles/MNIST.dir/main.cpp.o: /home/jhonatan/Documents/C++/MNIST-WITH-CPP/mai
 /usr/local/include/opencv4/opencv2/core/cvstd.inl.hpp:
 
 /usr/local/include/opencv4/opencv2/core/operations.hpp:
+
+/home/jhonatan/Documents/C++/MNIST-WITH-CPP/printData.cpp:
 
 /usr/local/include/opencv4/opencv2/core/persistence.hpp:
 

@@ -4,10 +4,8 @@
 #include <vector>
 #define epsilon 1e-10f
 
-Loss::Loss(vector<int> labels, const vector<vector<float>>& probabilities){
+Loss::Loss(vector<int> labels, const vector<vector<float>>& probabilities, vector<int> prediction){
 
-    vector<int> predictionVector = Loss::prediction(probabilities);
-    
     vector<vector<int>> distributionVectorVariable = Loss::distributionVector(labels);
 
     auto crossEntropy = Loss::cross_entropy(distributionVectorVariable, probabilities);

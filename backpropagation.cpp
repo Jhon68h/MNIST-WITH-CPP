@@ -10,17 +10,22 @@ void BP::gradient(float learningRate, const vector<vector<float>>& weights){
     //W     -> Peso Anterior
     //γ     -> Learning rate
     //∇f(W) -> Derivada parcial del error 
+
     
     
 
 }
 
-vector<float> derivateRelu(vector<float> input) {
-    auto sizeInput = input.sizex); 
+vector<float> BP::derivateRelu(vector<float> input) {
+    auto sizeInput = input.size(); 
     vector<float> derivate;
     
     for (size_t i = 0; i < sizeInput; i++) {
         derivate[i] = (input[i] > 0) ? 1.0f : 0.0f;
     }
     return derivate;
+}
+
+vector<vector<float>> BP::derivateSoftmax(vector<vector<float>> input){
+    
 }

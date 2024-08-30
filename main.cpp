@@ -46,6 +46,10 @@ int main(){
   //Imprimir las 10 primeras filas de resultados
   printFuntion(output_layer);
 
+  vector<int> predictionOutput = prediction(output_layer);
+
+  printFuntion(predictionOutput);
+
   if (checkProbabilities(output_layer)) {
       cout << "\nLas sumas de probabilidades da 1." << endl;
   } else {
