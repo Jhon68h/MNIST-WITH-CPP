@@ -1,12 +1,12 @@
 [
 {
   "directory": "/home/jhonatan/Documents/C++/MNIST-WITH-CPP/build",
-  "command": "/usr/bin/c++ -I/usr/include/opencv4 -isystem /usr/local/include/opencv4 -g -o CMakeFiles/MNIST.dir/main.cpp.o -c /home/jhonatan/Documents/C++/MNIST-WITH-CPP/main.cpp",
+  "command": "/usr/bin/c++  -I/usr/include/opencv4 -isystem /usr/local/include/opencv4 -g -o CMakeFiles/MNIST.dir/main.cpp.o -c /home/jhonatan/Documents/C++/MNIST-WITH-CPP/main.cpp",
   "file": "/home/jhonatan/Documents/C++/MNIST-WITH-CPP/main.cpp"
 },
 {
   "directory": "/home/jhonatan/Documents/C++/MNIST-WITH-CPP/build",
-  "command": "/usr/bin/c++ -I/usr/include/opencv4 -isystem /usr/local/include/opencv4 -g -o CMakeFiles/MNIST.dir/Neuron.cpp.o -c /home/jhonatan/Documents/C++/MNIST-WITH-CPP/Neuron.cpp",
+  "command": "/usr/bin/c++  -I/usr/include/opencv4 -isystem /usr/local/include/opencv4 -g -o CMakeFiles/MNIST.dir/Neuron.cpp.o -c /home/jhonatan/Documents/C++/MNIST-WITH-CPP/Neuron.cpp",
   "file": "/home/jhonatan/Documents/C++/MNIST-WITH-CPP/Neuron.cpp"
 }
 ]
