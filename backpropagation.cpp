@@ -1,9 +1,10 @@
 #include "include/backpropagation.hpp"
 #include <cstddef>
+#include <ratio>
 #include <vector>
 
 
-void BP::gradient(float learningRate, const vector<vector<float>>& weights){
+void BP::gradient(float learningRate, vector<vector<float>> softmax, vector<vector<int>> labelsVector,const vector<vector<float>>& weights){
     //Implementación del descenso del gradiente
     //formula
     //Wn+1 = W - γ∇f(W)
@@ -11,6 +12,8 @@ void BP::gradient(float learningRate, const vector<vector<float>>& weights){
     //W     -> Peso Anterior
     //γ     -> Learning rate
     //∇f(W) -> Derivada parcial del error 
+
+    vector<vector<float>> gradient = derivateSoftmax(softmax, labelsVector);
 
 }
 
@@ -24,7 +27,7 @@ vector<float> BP::derivateRelu(vector<float> input) {
     return derivate;
 }
 
-vector<vector<float>> BP::derivateSoftmax(vector<vector<float>> softmaxVector, vector<vector<float>> distributionVector){
+vector<vector<float>> BP::derivateSoftmax(vector<vector<float>> softmaxVector, vector<vector<int>> distributionVector){
     /*se necesita calcular la derivada de la función de perdidad
     con respecto a los logits z_i que entran en la función de softmax
     */
@@ -37,17 +40,24 @@ vector<vector<float>> BP::derivateSoftmax(vector<vector<float>> softmaxVector, v
     //Entonces la derivada vendria siendo softmax(i) - y_i donde y_i es 1 para la clase
     //correcta y 0 para la incorrecta
 
-/// QUE RECIBE?/////////////////////////////
+    /* Se necesita calcular la derivada de la función de pérdida
+    con respecto a los logits z_i que entran en la función de softmax. */
+
+    ///////////////////////////QUE RECIBE?/////////////////////////////
 
     //recibe el valor de softmax
     //recibe el vector de valores correctos
-    int softmaxSize = softmaxVector.size();
-    int distributionSize = distributionVector.size();
+    auto row = softmaxVector.size();
+    auto col = softmaxVector[0].size();
 
-    for(int i = 0; i < softmaxSize; i++){
-        for (int j = 0; j < distributionSize; j++) {
-        
+    vector<vector<float>> derivateVector(row, vector<float>(col, 0));
+
+    for(int i = 0; i < row; i++){
+        for(int j = 0; j < col; j++){
+            derivateVector[i][j] = softmaxVector[i][j] - distributionVector[i][j];
         }
     }
+
+    return derivateVector;
 
 }
