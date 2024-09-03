@@ -1,11 +1,11 @@
-#include "include/loss_functions.hpp"
 #include <cmath>
 #include <iterator>
 #include <vector>
 
 #define epsilon 1e-10f
 
-// Constructor de la clase Loss, inicializa las referencias 'labels' y 'probabilities' usando la lista de inicialización.
+using namespace std;
+/*
 Loss::Loss(int epoch, const vector<int>& labels, const vector<vector<float>>& probabilities)
     : epoch(epoch), labels(labels), probabilities(probabilities) {  // Usa la lista de inicialización
 
@@ -19,11 +19,11 @@ Loss::Loss(int epoch, const vector<int>& labels, const vector<vector<float>>& pr
         lossValues[i] = crossEntropy;
     }
 
-}
+}*/
 
 
 
-vector<vector<int>> Loss::distributionVector(const vector<int>& labels){
+vector<vector<int>> distributionVector(const vector<int>& labels){
     // La función tiene que leer el label y en un vector de 0 de 10 posiciones
     // pondrá un 1 en la posición que el label marque
 
@@ -43,7 +43,7 @@ vector<vector<int>> Loss::distributionVector(const vector<int>& labels){
     return positionVector;
 }
 
-double Loss::cross_entropy(const vector<vector<int>>& distributionVector, vector<vector<float>> prediction) {
+double cross_entropy(const vector<vector<int>>& distributionVector, vector<vector<float>> prediction) {
     // Se ingresa el distributionVector, este vector fue implementado en la anterior
     // función, que como se explicó, es un vector que determina la posición
     // real del label
