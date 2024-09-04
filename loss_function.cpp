@@ -48,6 +48,10 @@ double cross_entropy(const vector<vector<int>>& distributionVector, vector<vecto
     // Se ingresa el distributionVector, este vector fue implementado en la anterior
     // función, que como se explicó, es un vector que determina la posición
     // real del label
+
+    //EL vector de prediction es el vector que arroja las probabilidades obtenidas
+    //no el que da el numero que predijo sino las probabilidades
+    
     auto distributionVectorSize = distributionVector.size();
 
     double sum = 0.0f;
@@ -64,5 +68,5 @@ double cross_entropy(const vector<vector<int>>& distributionVector, vector<vecto
         }
     }
 
-    return sum;
+    return sum / distributionVectorSize;
 }

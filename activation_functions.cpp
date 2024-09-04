@@ -45,6 +45,7 @@ vector<float> derivateRelu(vector<float> input) {
 }
 
 vector<vector<float>> derivateSoftmax(vector<vector<float>> softmaxVector, vector<vector<int>> distributionVector){
+    
     /*se necesita calcular la derivada de la función de perdidad
     con respecto a los logits z_i que entran en la función de softmax
     */

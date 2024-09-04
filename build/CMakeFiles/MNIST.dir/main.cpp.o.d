@@ -377,7 +377,6 @@ CMakeFiles/MNIST.dir/main.cpp.o: \
  /home/jhonatan/Documents/C++/MNIST-WITH-CPP/activation_functions.cpp \
  /home/jhonatan/Documents/C++/MNIST-WITH-CPP/sumProbabilities.cpp \
  /home/jhonatan/Documents/C++/MNIST-WITH-CPP/loss_function.cpp \
- /home/jhonatan/Documents/C++/MNIST-WITH-CPP/include/loss_functions.hpp \
  /usr/include/c++/12/iterator /usr/include/c++/12/bits/stream_iterator.h \
  /home/jhonatan/Documents/C++/MNIST-WITH-CPP/shuffle.cpp \
  /home/jhonatan/Documents/C++/MNIST-WITH-CPP/printData.cpp

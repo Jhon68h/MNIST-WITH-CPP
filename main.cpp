@@ -4,6 +4,7 @@
 #include "sumProbabilities.cpp"
 #include "loss_function.cpp"
 #include <iomanip>
+#include <vector>
 #include "shuffle.cpp"
 #include "printData.cpp"
 
@@ -47,6 +48,12 @@ int main(){
   printFuntion(output_layer);
 
   vector<int> predictionOutput = prediction(output_layer);
+  
+  vector<vector<int>> one_hot_encondig = distributionVector(labels);
+
+  double crossEntropy = cross_entropy(one_hot_encondig, output_layer);
+
+  cout << "\n Cross entropy -> " << crossEntropy << endl;
 
   printFuntion(predictionOutput);
 
