@@ -19,7 +19,7 @@ void relu(vector<vector<float>>& input) {
 
 void softmax(vector<vector<float>>& input) {
     //e^zj/(Sum{k=1}->{K} e^z_{k}) con j -> 1,..,K
-    for (auto& row : input) {
+    for (auto& row   : input) {
         float max_val = *max_element(row.begin(), row.end());
         float sum_exp = 0.0f;
 

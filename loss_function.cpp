@@ -5,6 +5,7 @@
 #define epsilon 1e-10f
 
 using namespace std;
+
 /*
 Loss::Loss(int epoch, const vector<int>& labels, const vector<vector<float>>& probabilities)
     : epoch(epoch), labels(labels), probabilities(probabilities) {  // Usa la lista de inicialización
