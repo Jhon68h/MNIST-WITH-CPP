@@ -1,4 +1,5 @@
 #include <cmath>
+#include <cstddef>
 #include <iterator>
 #include <vector>
 
@@ -57,8 +58,8 @@ double cross_entropy(const vector<vector<int>>& distributionVector, vector<vecto
     double sum = 0.0f;
 
     #pragma omp parallel for reduction(-:sum) // Paralelización del bucle
-    for(int i = 0; i < distributionVectorSize; i++) {
-        for(int j = 0; j < 10; j++) {
+    for(size_t i = 0; i < distributionVectorSize; i++) {
+        for(size_t j = 0; j < 10; j++) {
             // Entropía cruzada
             // H(p, q) = -SUM i->M p(i)log(q(i))
             // M = número de clases
@@ -69,4 +70,24 @@ double cross_entropy(const vector<vector<int>>& distributionVector, vector<vecto
     }
 
     return sum / distributionVectorSize;
+}
+
+auto derivateSoftmaxLogits(const vector<vector<int>>& softmaxVector, const vector<vector<float>>& prediction) {
+    //La derivada de la función de activación respecto a los logits 
+    
+    size_t row = prediction.size();
+    size_t col = prediction[0].size();
+    vector<vector<float>> gradient(row, vector<float>(col));
+
+    for (size_t i = 0; i < row; ++i) {
+        for (size_t j = 0; j < col; ++j) {
+            if(i == j){
+                gradient[i][j] = softmaxVector[i][j] * (1 - softmaxVector[i][j]);
+            }else{
+                gradient[i][j] -= softmaxVector[i][j] * softmaxVector[i][j];
+            }
+        }
+    }
+
+    return gradient;
 }

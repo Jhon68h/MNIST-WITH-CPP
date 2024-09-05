@@ -1,5 +1,6 @@
 #include <cmath>
 #include <algorithm> 
+#include <cstddef>
 #include <vector>
 #include <iostream>
 
@@ -34,17 +35,19 @@ void softmax(vector<vector<float>>& input) {
     }
 }
 
-vector<float> derivateRelu(vector<float> input) {
+vector<vector<float>> derivateRelu(vector<vector<float>> input) {
     auto sizeInput = input.size(); 
-    vector<float> derivate;
+    vector<vector<float>> derivate;
     
     for (size_t i = 0; i < sizeInput; i++) {
-        derivate[i] = (input[i] > 0) ? 1.0f : 0.0f;
+        for(size_t j = 0; j < input[0].size(); j++){
+            derivate[i][j] = (input[i][j] > 0) ? 1.0f : 0.0f;
+        }
     }
     return derivate;
 }
 
-vector<vector<float>> derivateSoftmax(vector<vector<float>> softmaxVector, vector<vector<int>> distributionVector){
+vector<vector<float>> derivateCostVsSoftmax(vector<vector<float>> softmaxVector, vector<vector<int>> distributionVector){
     
     /*se necesita calcular la derivada de la función de perdidad
     con respecto a los logits z_i que entran en la función de softmax
