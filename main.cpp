@@ -8,60 +8,55 @@
 #include "shuffle.cpp"
 #include "printData.cpp"
 
-
-int main(){
+int main() {
+    // Archivos de datos
+    const std::string testDataPath = "/home/jhonatan/Documents/C++/MNIST_TRY/dataset/mnist_test_normalized.csv";
+    const std::string trainDataPath = "/home/jhonatan/Documents/C++/MNIST_TRY/dataset/mnist_train_normalized.csv";
   
-  //LECTURA DE DATOS
-  string testData = "/home/jhonatan/Documents/C++/MNIST_TRY/dataset/mnist_test_normalized.csv";
-  string trainData = "/home/jhonatan/Documents/C++/MNIST_TRY/dataset/mnist_train_normalized.csv";
-  
-  ReadData rd(trainData);
+    // Lectura de datos
+    ReadData rd(trainDataPath);
+    std::vector<std::vector<float>> data = rd.readCSV(trainDataPath);
+    std::vector<int> labels = rd.getLabels();
 
-  vector<vector<float>> data_from_readcsv = rd.readCSV(trainData);
-  
-  vector<int> labels = rd.getLabels();
-////////////////////////////////////////////////////////////////////////
-  //CAPA OCULTA
-////////////////////////////////////////////////////////////////////////
-  int hidden_layer_size = 16;
+    // Configuraciones de capas
+    const int hiddenLayerSize = 16;
+    const int outputLayerSize = 10;
 
-  Neuron neuron(hidden_layer_size, data_from_readcsv);
+    // Capa oculta
+    Neuron hiddenLayer(hiddenLayerSize, data);
+    std::vector<std::vector<float>> hiddenLayerOutput = hiddenLayer.getMultiply_perceptron();
+    relu(hiddenLayerOutput);  // Aplicar función de activación ReLU
 
-  vector<vector<float>> operation = neuron.getMultiply_perceptron();
-  
-  relu(operation);
+    std::cout << "\nFilas de capa oculta: " << hiddenLayerOutput.size() << std::endl;
+    std::cout << "Columnas de capa oculta: " << hiddenLayerOutput[0].size() << std::endl;
 
-  cout << "\n filas de capa oculta: " << operation.size() << endl;
-  cout << "\n columnas de capa oculta: " << operation[0].size() << endl;
+    // Capa de salida
+    Neuron outputLayer(outputLayerSize, hiddenLayerOutput);
+    std::vector<std::vector<float>> output = outputLayer.getMultiply_perceptron();
+    softmax(output);  // Aplicar función softmax
 
-  //////////////////////////////////////////////////////////////////
-  //CAPA DE SALIDA
-  //////////////////////////////////////////////////////////////////
-  int output_layer_size = 10;
+    // Imprimir las 10 primeras filas de resultados
+    printFuntion(output);
 
-  Neuron neuron2(output_layer_size, operation);
+    // Predicciones
+    std::vector<int> predictions = prediction(output);
 
-  vector<vector<float>> output_layer = neuron2.getMultiply_perceptron();
-  softmax(output_layer);
-  
-  //Imprimir las 10 primeras filas de resultados
-  printFuntion(output_layer);
+    // One-hot encoding
+    std::vector<std::vector<int>> oneHotEncoding = distributionVector(labels);
 
-  vector<int> predictionOutput = prediction(output_layer);
-  
-  vector<vector<int>> one_hot_encondig = distributionVector(labels);
+    // Cálculo de la entropía cruzada
+    double crossEntropy = cross_entropy(oneHotEncoding, output);
+    std::cout << "\nCross entropy: " << crossEntropy << std::endl;
 
-  double crossEntropy = cross_entropy(one_hot_encondig, output_layer);
+    // Imprimir predicciones
+    printFuntion(predictions);
 
-  cout << "\n Cross entropy -> " << crossEntropy << endl;
+    // Verificar que las sumas de probabilidades sean 1
+    if (checkProbabilities(output)) {
+        std::cout << "\nLas sumas de probabilidades son correctas (suman 1)." << std::endl;
+    } else {
+        std::cout << "\nError: Algunas filas no suman 1." << std::endl;
+    }
 
-  printFuntion(predictionOutput);
-
-  if (checkProbabilities(output_layer)) {
-      cout << "\nLas sumas de probabilidades da 1." << endl;
-  } else {
-      cout << "\nError: Algunas filas no suman 1." << endl;
-  }
-
-  return 0;
+    return 0;
 }
