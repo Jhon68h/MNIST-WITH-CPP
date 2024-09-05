@@ -1,5 +1,4 @@
-#ifndef NEURON_HPP
-#define NEURON_HPP
+#pragma once
 
 #include <iostream>
 #include <cmath>
@@ -50,4 +49,3 @@ private:
 
 };
 
-#endif

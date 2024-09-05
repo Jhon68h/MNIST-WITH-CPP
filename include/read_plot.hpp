@@ -54,7 +54,7 @@ vector<vector<float>> ReadData::readCSV(const string &filename) {
     string line;
 
     if (getline(file, line)) {
-        cout << "encabezado ignorado" << endl;
+        cout << " " <<endl;
     } else {
         cerr << "Error: No se pudo leer el encabezado del archivo CSV." << endl;
         return data;

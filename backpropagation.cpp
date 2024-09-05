@@ -37,6 +37,11 @@ auto backpropagation(const vector<vector<float>>& softmaxVector, const vector<ve
 vector<vector<float>> derivateSoftmaxLogits(const vector<vector<float>>& softmaxVector) {
     //La derivada de la función de activación respecto a los logits 
     
+    //Kronecker delta
+    
+    //Por el delta de Kronecjer [i = j] = 1 --->  soft(z_i)*(1-soft(z_i)) 
+
+    //Por el delta [i != j] = 0 ---> -soft(z_i)*soft(z_j)
     size_t row = softmaxVector.size();
     size_t col = softmaxVector[0].size();
     vector<vector<float>> gradient(row, vector<float>(col, 0.0f));
@@ -57,14 +62,10 @@ vector<vector<float>> derivateSoftmaxLogits(const vector<vector<float>>& softmax
 
 vector<vector<float>> derivateCostVsSoftmax(vector<vector<float>> softmaxVector, vector<vector<int>> distributionVector){
     
-    /*se necesita calcular la derivada de la función de perdidad
+    /*se necesita calcular la derivada de la función de perdida
     con respecto a los logits z_i que entran en la función de softmax
     */
-    //Kronecker delta
-    
-    //Por el delta de Kronecjer [i = j] = 1 --->  soft(z_i)*(1-soft(z_i)) 
 
-    //Por el delta [i != j] = 0 ---> -soft(z_i)*soft(z_j)
     
     //Entonces la derivada vendria siendo softmax(i) - y_i donde y_i es 1 para la clase
     //correcta y 0 para la incorrecta
@@ -91,7 +92,7 @@ vector<vector<float>> derivateCostVsSoftmax(vector<vector<float>> softmaxVector,
 
 }
 
-auto backpropagation(const vector<vector<float>>& softmaxVector, const vector<vector<float>>& prediction,vector<vector<int>> distributionVector){
+auto deltaValue(const vector<vector<float>>& softmaxVector, const vector<vector<float>>& prediction,vector<vector<int>> distributionVector, vector<vector<float>> weight){
 
 //backpropagation ultima capa = derivateCostVsSoftmax * derivateSoftmaxLogits
     vector<vector<float>> x = derivateSoftmaxLogits(softmaxVector);
@@ -100,7 +101,7 @@ auto backpropagation(const vector<vector<float>>& softmaxVector, const vector<ve
     int row = x.size();
     int col = x[0].size();
 
-    auto delta = vector<vector<float>> (row, vector<float> (colY, 0.0f));
+    auto delta = vector<vector<float>> (row, vector<float> (col, 0.0f));
     
     for (size_t i = 0; i < row; i++) {
         for (size_t j = 0; j < col; j++) {
@@ -109,3 +110,4 @@ auto backpropagation(const vector<vector<float>>& softmaxVector, const vector<ve
     }
 
 }
+
