@@ -47,38 +47,3 @@ vector<vector<float>> derivateRelu(vector<vector<float>> input) {
     return derivate;
 }
 
-vector<vector<float>> derivateCostVsSoftmax(vector<vector<float>> softmaxVector, vector<vector<int>> distributionVector){
-    
-    /*se necesita calcular la derivada de la función de perdidad
-    con respecto a los logits z_i que entran en la función de softmax
-    */
-    //Kronecker delta
-    
-    //Por el delta de Kronecjer [i = j] = 1 --->  soft(z_i)*(1-soft(z_i)) 
-
-    //Por el delta [i != j] = 0 ---> -soft(z_i)*soft(z_j)
-    
-    //Entonces la derivada vendria siendo softmax(i) - y_i donde y_i es 1 para la clase
-    //correcta y 0 para la incorrecta
-
-    /* Se necesita calcular la derivada de la función de pérdida
-    con respecto a los logits z_i que entran en la función de softmax. */
-
-    ///////////////////////////QUE RECIBE?/////////////////////////////
-
-    //recibe el valor de softmax
-    //recibe el vector de valores correctos
-    auto row = softmaxVector.size();
-    auto col = softmaxVector[0].size();
-
-    vector<vector<float>> derivateVector(row, vector<float>(col, 0));
-
-    for(int i = 0; i < row; i++){
-        for(int j = 0; j < col; j++){
-            derivateVector[i][j] = softmaxVector[i][j] - distributionVector[i][j];
-        }
-    }
-
-    return derivateVector;
-
-}
