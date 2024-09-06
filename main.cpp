@@ -51,6 +51,7 @@ int main() {
     vector<vector<float>> outputWeight = outputLayer.getWeightVector();
     auto back = gradientBackPropagation(outputWeight, output, oneHotEncoding);
     printFuntion(back);
+    
     // Imprimir predicciones
     printFuntion(predictions);
 
