@@ -41,7 +41,7 @@ almacenando el resultado en el perceptron
   cout << "\n pesos filas: " << weights_for_operation.size() << endl;
 */
 
-multiply_perceptron(inputNeurons, weights_for_operation);
+  multiply_perceptron(inputNeurons, weights_for_operation);
 
 }
 
@@ -88,7 +88,7 @@ vector<vector<float>> Neuron::getWeight(){
   return weight;
 }
 
-vector<float> Neuron::getBias() {
+vector<float> Neuron::getBias(){
 
     int size = get_nextLayer_size_col();
 
@@ -123,6 +123,7 @@ vector<vector<float>> Neuron::multiply_perceptron(vector<vector<float>> A, vecto
 
 
   for (int i = 0; i < rowsA; ++i) {
+    
     for (int j = 0; j < colsB; ++j) {
       for (int k = 0; k < colsA; ++k) {
         operation[i][j] += A[i][k] * B[k][j];

@@ -374,9 +374,10 @@ CMakeFiles/MNIST.dir/main.cpp.o: \
  /usr/include/c++/12/bits/random.tcc /usr/include/c++/12/numeric \
  /usr/include/c++/12/bits/stl_numeric.h \
  /usr/include/c++/12/pstl/glue_numeric_defs.h \
- /home/jhonatan/Documents/C++/MNIST-WITH-CPP/activation_functions.cpp \
  /home/jhonatan/Documents/C++/MNIST-WITH-CPP/sumProbabilities.cpp \
+ /home/jhonatan/Documents/C++/MNIST-WITH-CPP/shuffle.cpp \
+ /home/jhonatan/Documents/C++/MNIST-WITH-CPP/printData.cpp \
+ /home/jhonatan/Documents/C++/MNIST-WITH-CPP/backpropagation.cpp \
  /home/jhonatan/Documents/C++/MNIST-WITH-CPP/loss_function.cpp \
  /usr/include/c++/12/iterator /usr/include/c++/12/bits/stream_iterator.h \
- /home/jhonatan/Documents/C++/MNIST-WITH-CPP/shuffle.cpp \
- /home/jhonatan/Documents/C++/MNIST-WITH-CPP/printData.cpp
+ /home/jhonatan/Documents/C++/MNIST-WITH-CPP/activation_functions.cpp

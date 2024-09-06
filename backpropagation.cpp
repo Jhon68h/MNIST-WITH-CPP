@@ -10,9 +10,16 @@
 using namespace std;
 
 vector<vector<float>> derivateSoftmaxLogits(const vector<vector<float>>& softmaxVector);
-vector<vector<float>> derivateCostVsSoftmax(vector<vector<float>> softmaxVector, vector<vector<int>> distributionVector);
-auto backpropagation(const vector<vector<float>>& softmaxVector, const vector<vector<float>>& prediction,vector<vector<int>> distributionVector);
 
+vector<vector<float>> derivateCostVsSoftmax(vector<vector<float>> softmaxVector, 
+                                            vector<vector<int>> distributionVector);
+
+auto deltaValue(const vector<vector<float>>& softmaxVector, 
+                vector<vector<int>> distributionVector);
+
+auto gradientBackPropagation(vector<vector<float>> weight, 
+                            const vector<vector<float>> &softmaxVector, 
+                            vector<vector<int>> distributionVector);
 
 //La lógica principal es saber "COMO VARIA EL COSTE RESPECTO A LOS PARAMETROS DE LA RED"
 //  ∂C/∂w * ∂C/∂b
@@ -60,13 +67,13 @@ vector<vector<float>> derivateSoftmaxLogits(const vector<vector<float>>& softmax
     return gradient;
 }
 
-vector<vector<float>> derivateCostVsSoftmax(vector<vector<float>> softmaxVector, vector<vector<int>> distributionVector){
+vector<vector<float>> derivateCostVsSoftmax(vector<vector<float>> softmaxVector, 
+                                            vector<vector<int>> distributionVector){
     
     /*se necesita calcular la derivada de la función de perdida
     con respecto a los logits z_i que entran en la función de softmax
     */
 
-    
     //Entonces la derivada vendria siendo softmax(i) - y_i donde y_i es 1 para la clase
     //correcta y 0 para la incorrecta
 
@@ -92,7 +99,8 @@ vector<vector<float>> derivateCostVsSoftmax(vector<vector<float>> softmaxVector,
 
 }
 
-auto deltaValue(const vector<vector<float>>& softmaxVector, const vector<vector<float>>& prediction,vector<vector<int>> distributionVector, vector<vector<float>> weight){
+auto deltaValue(const vector<vector<float>>& softmaxVector, 
+                vector<vector<int>> distributionVector){
 
 //backpropagation ultima capa = derivateCostVsSoftmax * derivateSoftmaxLogits
     vector<vector<float>> x = derivateSoftmaxLogits(softmaxVector);
@@ -109,5 +117,33 @@ auto deltaValue(const vector<vector<float>>& softmaxVector, const vector<vector<
         }
     }
 
+    return delta;
+
 }
 
+auto gradientBackPropagation(vector<vector<float>> weight, 
+                            const vector<vector<float>> &softmaxVector, 
+                            vector<vector<int>> distributionVector){
+                                
+    //Ralizamo el backpropagation, sin embargo esto solo funciona
+    //para la última capa, con los ultimos pesos
+
+    vector<vector<float>> delta = deltaValue(softmaxVector, distributionVector);
+
+    int deltaRow = delta.size();
+    int deltaCol = delta[0].size();
+    int weightCol = weight[0].size();
+
+    vector<vector<float>> gradient(deltaRow, vector<float>(weightCol, 0.0f));
+
+    for (size_t i = 0; i < deltaRow; i++) {
+        for (size_t j = 0; j < weightCol; j++) {
+            for (size_t k = 0; k < deltaCol; k++) {
+                gradient[i][j] += delta[i][k] * weight[k][j];
+            }
+        }
+    }
+    
+    return gradient;
+
+}

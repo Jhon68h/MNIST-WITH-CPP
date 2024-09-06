@@ -1,12 +1,11 @@
 #include "include/read_plot.hpp"
 #include "include/Neuron.hpp"
-#include "activation_functions.cpp"
 #include "sumProbabilities.cpp"
-#include "loss_function.cpp"
 #include <iomanip>
 #include <vector>
 #include "shuffle.cpp"
 #include "printData.cpp"
+#include "backpropagation.cpp"
 
 int main() {
     // Archivos de datos
@@ -37,7 +36,7 @@ int main() {
 
     // Imprimir las 10 primeras filas de resultados
     printFuntion(output);
-
+    
     // Predicciones
     std::vector<int> predictions = prediction(output);
 
@@ -48,6 +47,10 @@ int main() {
     double crossEntropy = cross_entropy(oneHotEncoding, output);
     std::cout << "\nCross entropy: " << crossEntropy << std::endl;
 
+    //backpropagation
+    vector<vector<float>> outputWeight = outputLayer.getWeightVector();
+    auto back = gradientBackPropagation(outputWeight, output, oneHotEncoding);
+    printFuntion(back);
     // Imprimir predicciones
     printFuntion(predictions);
 

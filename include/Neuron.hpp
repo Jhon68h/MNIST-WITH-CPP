@@ -27,6 +27,7 @@ public:
     int get_input_size_row() { return input_size_row;}
     int get_nextLayer_size_col() {return next_size_col;}
     int get_nextLayer_size_row() { return next_size_row;}
+    vector<vector<float>> getWeightVector() const {return weight;};
     vector<vector<float>> getNextLayer() { return nextLayer; }
     vector<vector<float>> getMultiply_perceptron() { return operation; }
 
