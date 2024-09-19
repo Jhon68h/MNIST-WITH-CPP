@@ -13,7 +13,7 @@ public:
     //Neuron() = default;
     Neuron(int next_layer_size, vector<vector<float>> inputNeurons);
 
-//OBTENCIÓN DE PESOS Y BIAS
+//CREACIÓN DE PESOS Y BIAS
     vector<vector<float>> getWeight();
     vector<float> getBias();
 
@@ -22,14 +22,15 @@ public:
     vector<vector<float>> transposeFunction(vector<vector<float>>& data);
     vector<vector<float>> nextLayer;
 
-//OBTENCIÓN DE RESULTADOS
+//OBTENCIÓN DE DATOS    
     int get_input_size_col() { return input_size_col;}
     int get_input_size_row() { return input_size_row;}
     int get_nextLayer_size_col() {return next_size_col;}
     int get_nextLayer_size_row() { return next_size_row;}
-    vector<vector<float>> getWeightVector() const {return weight;};
     vector<vector<float>> getNextLayer() { return nextLayer; }
     vector<vector<float>> getMultiply_perceptron() { return operation; }
+    vector<vector<float>> getWeightVector() const {return weight;};
+
 
 private:
 

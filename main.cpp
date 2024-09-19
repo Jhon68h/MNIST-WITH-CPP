@@ -7,6 +7,8 @@
 #include "printData.cpp"
 #include "backpropagation.cpp"
 
+#define learning_rate 0.01f
+
 int main() {
     // Archivos de datos
     const std::string testDataPath = "/home/jhonatan/Documents/C++/MNIST_TRY/dataset/mnist_test_normalized.csv";
@@ -41,7 +43,7 @@ int main() {
     std::vector<int> predictions = prediction(output);
 
     // One-hot encoding
-    std::vector<std::vector<int>> oneHotEncoding = distributionVector(labels);
+    std::vector<std::vector<float>> oneHotEncoding = distributionVector(labels);
 
     // Cálculo de la entropía cruzada
     double crossEntropy = cross_entropy(oneHotEncoding, output);
@@ -49,11 +51,13 @@ int main() {
 
     //backpropagation
     vector<vector<float>> outputWeight = outputLayer.getWeightVector();
-    auto back = gradientBackPropagation(outputWeight, output, oneHotEncoding);
-    printFuntion(back);
+    auto outputBack = outputBackPropagation(outputWeight, output, oneHotEncoding);
+    printFuntion(outputBack);
     
     // Imprimir predicciones
     printFuntion(predictions);
+
+    
 
     // Verificar que las sumas de probabilidades sean 1
     if (checkProbabilities(output)) {

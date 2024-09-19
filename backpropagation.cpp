@@ -1,25 +1,4 @@
-#include <cstddef>
-#include <iostream>
-#include <vector>
-#include <cmath>
-#include <algorithm>
-#include "loss_function.cpp"
-#include "activation_functions.cpp"
-
-
-using namespace std;
-
-vector<vector<float>> derivateSoftmaxLogits(const vector<vector<float>>& softmaxVector);
-
-vector<vector<float>> derivateCostVsSoftmax(vector<vector<float>> softmaxVector, 
-                                            vector<vector<int>> distributionVector);
-
-auto deltaValue(const vector<vector<float>>& softmaxVector, 
-                vector<vector<int>> distributionVector);
-
-auto gradientBackPropagation(vector<vector<float>> weight, 
-                            const vector<vector<float>> &softmaxVector, 
-                            vector<vector<int>> distributionVector);
+#include "include/Backpropagation.hpp"
 
 //La lógica principal es saber "COMO VARIA EL COSTE RESPECTO A LOS PARAMETROS DE LA RED"
 //  ∂C/∂w * ∂C/∂b
@@ -28,10 +7,14 @@ auto gradientBackPropagation(vector<vector<float>> weight,
 //entonces si quiero saber como la variación de los pesos afecta a la función de costo
 //tengo que aplicar la regla de la cadena para sacar las derivadas de esta
 //función compuesta 
-//                             C(A(Z))
-//C -> función de costo
-//A -> función de activación
-//Z -> sumatoría de la ecuacion de perceptrón
+
+/*
+                               C(A(Z))  
+
+                               C -> función de costo
+                               A -> función de activación
+                               Z -> sumatoría de la ecuacion de perceptrón
+*/
 
 //Si tenemos una cantidad de capas L, inicia desde la ultíma, es decir L
 
@@ -41,7 +24,7 @@ auto gradientBackPropagation(vector<vector<float>> weight,
 //Siendo ∂C/∂w = (a_{i})^L-1 y ∂C/∂b = 1
 
 
-vector<vector<float>> derivateSoftmaxLogits(const vector<vector<float>>& softmaxVector) {
+vector<vector<float>> Backpropagation::derivateSoftmaxLogits(const vector<vector<float>>& softmaxVector) {
     //La derivada de la función de activación respecto a los logits 
     
     //Kronecker delta
@@ -53,22 +36,27 @@ vector<vector<float>> derivateSoftmaxLogits(const vector<vector<float>>& softmax
     size_t col = softmaxVector[0].size();
     vector<vector<float>> gradient(row, vector<float>(col, 0.0f));
 
-    for(int k = 0; k < row; k++){
+    // Calculamos la derivada para la diagonal y no diagonal en un solo bucle
+    for (int k = 0; k < row; k++) {
         for (size_t i = 0; i < col; ++i) {
+            // Diagonal i == j
+            gradient[k][i] = softmaxVector[k][i] * (1.0f - softmaxVector[k][i]);
+
+            // No diagonal: acumulamos los términos de i != j
             for (size_t j = 0; j < col; ++j) {
-                if(i == j){
-                    gradient[k][i] = softmaxVector[k][i] * (1.0f - softmaxVector[k][i]);
-                }else{
+                if (i != j) {
                     gradient[k][i] -= softmaxVector[k][i] * softmaxVector[k][j];
                 }
             }
         }
     }
-    return gradient;
+    
+    return gradient; //DIMENSIONES -> IGUALES A SOFTMAX VECTOR (60000, 10)
 }
 
-vector<vector<float>> derivateCostVsSoftmax(vector<vector<float>> softmaxVector, 
-                                            vector<vector<int>> distributionVector){
+
+vector<vector<float>> Backpropagation::derivateCostVsSoftmax(vector<vector<float>> softmaxVector, 
+                                            vector<vector<float>> distributionVector){
     
     /*se necesita calcular la derivada de la función de perdida
     con respecto a los logits z_i que entran en la función de softmax
@@ -84,23 +72,24 @@ vector<vector<float>> derivateCostVsSoftmax(vector<vector<float>> softmaxVector,
 
     //recibe el valor de softmax
     //recibe el vector de valores correctos
-    auto row = softmaxVector.size();
-    auto col = softmaxVector[0].size();
+    size_t row = softmaxVector.size();
+    size_t col = softmaxVector[0].size();
 
-    vector<vector<float>> derivateVector(row, vector<float>(col, 0));
-
+    vector<vector<float>> derivateCost(row, vector<float>(col, 0.0f));
+    
     for(size_t i = 0; i < row; i++){
-        for(size_t j = 0; j < col; j++){
-            derivateVector[i][j] = softmaxVector[i][j] - distributionVector[i][j];
+        for (size_t j = 0; j < col; j++) {
+            derivateCost[i][j] = softmaxVector[i][j] - distributionVector[i][j];
         }
     }
 
-    return derivateVector;
+    return derivateCost;//DIMENSIONES IGUAL 60000, 10
 
 }
 
-auto deltaValue(const vector<vector<float>>& softmaxVector, 
-                vector<vector<int>> distributionVector){
+
+vector<vector<float>> Backpropagation::deltaValue(const vector<vector<float>>& softmaxVector, 
+                vector<vector<float>> distributionVector){
 
 //backpropagation ultima capa = derivateCostVsSoftmax * derivateSoftmaxLogits
     vector<vector<float>> x = derivateSoftmaxLogits(softmaxVector);
@@ -117,33 +106,55 @@ auto deltaValue(const vector<vector<float>>& softmaxVector,
         }
     }
 
-    return delta;
+    return delta;//DIMENSIONES IGUAL 60000, 10
 
 }
 
-auto gradientBackPropagation(vector<vector<float>> weight, 
+vector<vector<float>> Backpropagation::outputBackPropagation(vector<vector<float>> output, 
                             const vector<vector<float>> &softmaxVector, 
-                            vector<vector<int>> distributionVector){
+                            vector<vector<float>> distributionVector, bool Bias = false){
                                 
-    //Ralizamo el backpropagation, sin embargo esto solo funciona
+    //Se realiza el backpropagation, sin embargo esto solo funciona
     //para la última capa, con los ultimos pesos
 
+    //La formula para los Bias es igual, sin embargo la derivada parcial 
+    //respecto a Bias es 1, entonces en el caso Bias se devuelve el mismo
+    //delta
     vector<vector<float>> delta = deltaValue(softmaxVector, distributionVector);
 
-    int deltaRow = delta.size();
-    int deltaCol = delta[0].size();
-    int weightCol = weight[0].size();
+    if (!Bias) {
 
-    vector<vector<float>> gradient(deltaRow, vector<float>(weightCol, 0.0f));
+        int deltaRow = delta.size();
+        int deltaCol = delta[0].size();
+        int outputCol = output[0].size();
 
-    for (size_t i = 0; i < deltaRow; i++) {
-        for (size_t j = 0; j < weightCol; j++) {
-            for (size_t k = 0; k < deltaCol; k++) {
-                gradient[i][j] += delta[i][k] * weight[k][j];
+        vector<vector<float>> gradient(deltaRow, vector<float>(outputCol, 0.0f));
+
+        for (size_t i = 0; i < deltaRow; i++) {
+            for (size_t j = 0; j < outputCol; j++) {
+                for (size_t k = 0; k < deltaCol; k++) {
+                    gradient[i][j] += delta[i][k] * output[k][j];
+                }   
             }
         }
+    
+        return gradient;
     }
     
-    return gradient;
+    return delta;
+}
+
+
+vector<vector<float>> Backpropagation::hiddenBackPropagation(vector<vector<float>> output, 
+                                  vector<vector<float>> softmaxVector, 
+                                  vector<vector<float>> distributionVector, 
+                                  bool Bias = false){
+    // Para las capas ocultas se usa la siguiente formula
+    //para Delta-1 --> W * Delta * ∂a-1/∂z-1
+    //y completa entonces --> Delta-1 * a-2
+
+    auto delta = deltaValue(softmaxVector, distributionVector);
+    
+    
 
 }

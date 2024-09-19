@@ -88,6 +88,8 @@ vector<vector<float>> Neuron::getWeight(){
   return weight;
 }
 
+
+
 vector<float> Neuron::getBias(){
 
     int size = get_nextLayer_size_col();
