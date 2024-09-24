@@ -46,6 +46,9 @@ vector<vector<float>> distributionVector(const vector<int>& labels){
 }
 
 double cross_entropy(const vector<vector<float>>& distributionVector, vector<vector<float>> prediction) {
+
+    //FUNCION DE PERDIDA CROSS_ENTROPY
+
     // Se ingresa el distributionVector, este vector fue implementado en la anterior
     // función, que como se explicó, es un vector que determina la posición
     // real del label

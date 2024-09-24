@@ -5,7 +5,7 @@
 #include <vector>
 #include "shuffle.cpp"
 #include "printData.cpp"
-#include "backpropagation.cpp"
+#include "Backpropagation.cpp"
 
 #define learning_rate 0.01f
 
@@ -50,9 +50,9 @@ int main() {
     std::cout << "\nCross entropy: " << crossEntropy << std::endl;
 
     //backpropagation
-    vector<vector<float>> outputWeight = outputLayer.getWeightVector();
-    auto outputBack = outputBackPropagation(outputWeight, output, oneHotEncoding);
-    printFuntion(outputBack);
+    // vector<vector<float>> outputWeight = outputLayer.getWeightVector();
+    // auto outputBack = outputBackPropagation(outputWeight, output, oneHotEncoding);
+    // printFuntion(outputBack);
     
     // Imprimir predicciones
     printFuntion(predictions);

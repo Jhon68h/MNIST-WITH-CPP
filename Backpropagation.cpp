@@ -1,4 +1,5 @@
 #include "include/Backpropagation.hpp"
+#include <vector>
 
 //La lógica principal es saber "COMO VARIA EL COSTE RESPECTO A LOS PARAMETROS DE LA RED"
 //  ∂C/∂w * ∂C/∂b
@@ -23,16 +24,27 @@
 //Todo esto para la última capa 
 //Siendo ∂C/∂w = (a_{i})^L-1 y ∂C/∂b = 1
 
+Backpropagation::Backpropagation(const vector<vector<float>> output, const vector<vector<float>> softmaxVector, const vector<vector<float>> distributionVector){
 
-vector<vector<float>> Backpropagation::derivateSoftmaxLogits(const vector<vector<float>>& softmaxVector) {
+    vector<vector<float>> softmaxLogits = derivateSoftmaxLogits(softmaxVector);
+
+    vector<vector<float>> costVsSoftmax = derivateCostVsSoftmax(softmaxVector, distributionVector);
+
+    vector<vector<float>> delta = deltaValue(softmaxVector, distributionVector);
+
+
+
+}
+
+vector<vector<float>> Backpropagation::derivateSoftmaxLogits(const vector<vector<float>> softmaxVector) {
     //La derivada de la función de activación respecto a los logits 
-    
     //Kronecker delta
     
     //Por el delta de Kronecjer [i = j] = 1 --->  soft(z_i)*(1-soft(z_i)) 
-
     //Por el delta [i != j] = 0 ---> -soft(z_i)*soft(z_j)
+    
     size_t row = softmaxVector.size();
+
     size_t col = softmaxVector[0].size();
     vector<vector<float>> gradient(row, vector<float>(col, 0.0f));
 
@@ -88,7 +100,7 @@ vector<vector<float>> Backpropagation::derivateCostVsSoftmax(vector<vector<float
 }
 
 
-vector<vector<float>> Backpropagation::deltaValue(const vector<vector<float>>& softmaxVector, 
+vector<vector<float>> Backpropagation::deltaValue(const vector<vector<float>> softmaxVector, 
                 vector<vector<float>> distributionVector){
 
 //backpropagation ultima capa = derivateCostVsSoftmax * derivateSoftmaxLogits
@@ -110,9 +122,7 @@ vector<vector<float>> Backpropagation::deltaValue(const vector<vector<float>>& s
 
 }
 
-vector<vector<float>> Backpropagation::outputBackPropagation(vector<vector<float>> output, 
-                            const vector<vector<float>> &softmaxVector, 
-                            vector<vector<float>> distributionVector, bool Bias = false){
+vector<vector<float>> Backpropagation::outputBackPropagation(const vector<vector<float>> output, const vector<vector<float>> delta, bool Bias){
                                 
     //Se realiza el backpropagation, sin embargo esto solo funciona
     //para la última capa, con los ultimos pesos
@@ -120,10 +130,9 @@ vector<vector<float>> Backpropagation::outputBackPropagation(vector<vector<float
     //La formula para los Bias es igual, sin embargo la derivada parcial 
     //respecto a Bias es 1, entonces en el caso Bias se devuelve el mismo
     //delta
-    vector<vector<float>> delta = deltaValue(softmaxVector, distributionVector);
 
     if (!Bias) {
-
+ 
         int deltaRow = delta.size();
         int deltaCol = delta[0].size();
         int outputCol = output[0].size();
@@ -148,8 +157,8 @@ vector<vector<float>> Backpropagation::outputBackPropagation(vector<vector<float
 vector<vector<float>> Backpropagation::hiddenBackPropagation(vector<vector<float>> output, 
                                   vector<vector<float>> softmaxVector, 
                                   vector<vector<float>> distributionVector, 
-                                  bool Bias = false){
-    // Para las capas ocultas se usa la siguiente formula
+                                  bool Bias){
+    // Para las capas ocultas se usa la siguiente formula   
     //para Delta-1 --> W * Delta * ∂a-1/∂z-1
     //y completa entonces --> Delta-1 * a-2
 
