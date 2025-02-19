@@ -7,5 +7,6 @@
 using namespace std;
 
 void test_function(vector<vector<float>>& x, vector<int>& labels) {
-   
+
 }
+

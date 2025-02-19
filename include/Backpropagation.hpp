@@ -4,7 +4,6 @@
 #include <iostream>
 #include <vector>
 #include <cmath>    
-#include <algorithm>
 #include "../loss_function.cpp"
 #include "../activation_functions.cpp"
 
@@ -15,7 +14,7 @@ public:
 
     // Método para calcular la derivada de los logits de softmax.
     vector<vector<float>> derivateSoftmaxLogits(const vector<vector<float>> softmaxVector);
-
+    
     // Método para calcular la derivada del coste respecto al valor de softmax.
     vector<vector<float>> derivateCostVsSoftmax(const vector<vector<float>> softmaxVector, 
                                                                  const vector<vector<float>> distributionVector);

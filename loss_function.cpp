@@ -31,7 +31,7 @@ vector<vector<float>> distributionVector(const vector<int>& labels){
 
     // EJEMPLO -> {5} -> {0, 0, 0, 0, 0, 1, 0, 0, 0, 0}
 
-    int cols = 10;
+    int cols = 10; //cantidad de clases 0 - 9
     auto rows = labels.size();
     vector<vector<float>> positionVector(rows, vector<float>(cols, 0.0f));
     
